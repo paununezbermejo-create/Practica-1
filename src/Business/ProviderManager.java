@@ -13,7 +13,7 @@ public class ProviderManager {
 
     public ProviderManager(ProviderJsonDao providerJsonDao) {
         this.providerJsonDao = new ProviderJsonDao();
-        providers = providerJsonDao.readFile();
+        this.providers = providerJsonDao.readFile();
     }
 
     public List<Provider> listProviders (){

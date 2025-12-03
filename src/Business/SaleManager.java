@@ -12,7 +12,7 @@ public class SaleManager {
 
     public SaleManager(SaleCsvDao saleCsvDao) {
         this.saleCsvDao = new SaleCsvDao();
-        sales = saleCsvDao.readSaleFile();
+        this.sales = saleCsvDao.readSaleFile();
     }
 
     public void addSale (List<Sale> ventas) {
