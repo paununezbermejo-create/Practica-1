@@ -20,7 +20,7 @@ public class Main{
         UIManager uiManager = new UIManager();
 
         Controller c = new Controller (clientManager, productManager, providerManager, saleManager, cartManager, uiManager);
-        System.out.println("Tus muertos\n");
+        System.out.println("Tus muertos a caballo\n");
         c.Start();
 
     }
