@@ -50,32 +50,16 @@ public class SaleCsvDao implements Cheek {
     public void createFile(String path) {
         try {
             java.io.File file = new java.io.File(path);
-
             if (!cheekFile()) {
                 boolean created = file.createNewFile(); // true si se creó, false si ya existía
-                if (created) {
-                    System.out.println("Archivo creado: " + path);
-                } else {
-                    System.out.println("El archivo ya existe: " + path);
-                }
-            } else {
-                System.out.println("El archivo ya existe: " + path);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error al crear archivo: " + path, e);
         }
     }
     
     @Override
     public boolean cheekFile() {
         File file = new File(path);
-        if (!file.exists()) {
-            try {
-                return file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException("Error al crear archivo: " + path, e);
-            }
-        }
-        return false;
+        return file.exists();
     }
 }

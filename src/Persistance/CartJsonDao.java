@@ -32,7 +32,6 @@ public class CartJsonDao implements Cheek {
     public Boolean createFile () {
         try {
             File file = new File(path);
-            // Solo crea el archivo, NO directorios
             if (!cheekFile()) {
                 return file.createNewFile();  // true si lo crea, false si ya existía
             }else{
@@ -45,17 +44,7 @@ public class CartJsonDao implements Cheek {
 
     @Override
     public boolean cheekFile (){
-        try {
-            File file = new File(path);
-
-            // Solo crea el archivo, NO directorios
-            if (!file.exists()) {
-                return file.createNewFile();  // true si lo crea, false si ya existía
-            }
-
-            return false; // ya existía
-        } catch (IOException e) {
-            throw new RuntimeException("Error al crear archivo: " + path, e);
-        }
+        File file = new File(path);
+        return file.exists();
     }
 }

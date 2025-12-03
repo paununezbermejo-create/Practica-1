@@ -58,14 +58,6 @@ public class ClientJsonDao implements Cheek {
 
     public boolean createFile() {
         File file = new File(path);
-
-        if (!file.exists()) {
-            try {
-                return file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException("Error al crear archivo: " + path, e);
-            }
-        }
-        return false; // ya existía
+        return file.exists();
     }
 }

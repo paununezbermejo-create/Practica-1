@@ -32,13 +32,6 @@ public class ProductJsonDao implements Cheek {
     @Override
     public boolean cheekFile() {
         File file = new File(path);
-        if (!file.exists()) {
-            try {
-                return file.createNewFile();
-            } catch (IOException e) {
-                System.out.println("Error: The products.json file can’t be accessed.\n");
-            }
-        }
-        return false;
+        return file.exists();
     }
 }

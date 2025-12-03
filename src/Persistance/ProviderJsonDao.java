@@ -43,13 +43,6 @@ public class ProviderJsonDao implements Cheek {
     @Override
     public boolean cheekFile() {
         File file = new File(path);
-        if (!file.exists()) {
-            try {
-                return file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException("The providers.json file can’t be accessed.\n");
-            }
-        }
-        return false;
+        return file.exists();
     }
 }
