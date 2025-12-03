@@ -5,7 +5,6 @@ public class Sale {
     String productId;
     double price;
     long purchaseDate;
-    Cart cart;
 
     public Sale(int clientId, String productId, double price, long purchaseDate) {
         this.clientId = clientId;
