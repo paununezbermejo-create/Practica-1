@@ -26,7 +26,6 @@ public class CartJsonDao implements Cheek {
             return gson.fromJson(reader, ListType);
 
         } catch (Exception e) {
-            System.out.println("Error al leer archivo: " + path);
             return null;
         }
     }
