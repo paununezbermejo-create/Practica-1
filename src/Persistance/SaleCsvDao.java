@@ -46,16 +46,6 @@ public class SaleCsvDao implements Cheek {
             throw new RuntimeException(e);
         }
     }
-
-    public void createFile(String path) {
-        try {
-            java.io.File file = new java.io.File(path);
-            if (!cheekFile()) {
-                boolean created = file.createNewFile(); // true si se creó, false si ya existía
-            }
-        } catch (IOException e) {
-        }
-    }
     
     @Override
     public boolean cheekFile() {

@@ -48,7 +48,6 @@ public class ClientJsonDao implements Cheek {
 
     public void actualizatClient(Client client) {
         Gson gson = new Gson();
-
         try (FileWriter fw = new FileWriter(path)) {
             gson.toJson(client, fw);
         } catch (IOException e) {
@@ -56,8 +55,4 @@ public class ClientJsonDao implements Cheek {
         }
     }
 
-    public boolean createFile() {
-        File file = new File(path);
-        return file.exists();
-    }
 }

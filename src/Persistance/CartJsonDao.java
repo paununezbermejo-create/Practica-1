@@ -6,8 +6,10 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartJsonDao implements Cheek {
@@ -29,18 +31,39 @@ public class CartJsonDao implements Cheek {
         }
     }
 
-    public Boolean createFile () {
+
+    public void actualizaFile(List<Cart> nuevosCarts) {
+        Gson gson = new Gson();
+        File file = new File(path);
+        List<Cart> cartsExistentes = new ArrayList<>();
+        Type listType = new TypeToken<List<Cart>>() {}.getType();
+
         try {
-            File file = new File(path);
-            if (!cheekFile()) {
-                return file.createNewFile();  // true si lo crea, false si ya existía
-            }else{
-                return false;
+
+            if (file.exists()) {
+                try (FileReader reader = new FileReader(file)) {
+                    cartsExistentes = gson.fromJson(reader, listType);
+
+                    if (cartsExistentes == null) {
+                        cartsExistentes = new ArrayList<>();
+                    }
+                }
             }
+            // 2. Actualizar lista: eliminar los antiguos que coinciden con el userId
+            for (Cart nuevo : nuevosCarts) {
+                cartsExistentes.removeIf(c -> c.getClientId() == nuevo.getClientId());
+                cartsExistentes.add(nuevo);
+            }
+
+            try (FileWriter writer = new FileWriter(file, false)) {
+                gson.toJson(cartsExistentes, writer);
+            }
+
         } catch (IOException e) {
-            throw new RuntimeException("Error al crear archivo: " + path, e);
+            e.printStackTrace();
         }
     }
+
 
     @Override
     public boolean cheekFile (){
