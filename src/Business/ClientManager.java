@@ -15,15 +15,10 @@ public class ClientManager {
         clients = clientJsonDao.readClientFile();
     }
 
-    public void showAllClients(){
-        for (Client client : clients){
-            System.out.println(client.getName());
-        }
-    }
-
     public void signUp(int clientID, String name, List<PhoneNumber> phones){
         //Crea cliente
         Client client = new Client(clientID, name, phones);
+        clients.add(client);
     }
 
     public Client logIn(int id){
@@ -45,6 +40,11 @@ public class ClientManager {
             }
         }
         return null;
+    }
+
+    public boolean cheeckFile (){
+        ClientJsonDao clientJsonDao = new ClientJsonDao();
+        return clientJsonDao.cheekFile();
     }
 
 }

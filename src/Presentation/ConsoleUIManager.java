@@ -28,6 +28,9 @@ public class ConsoleUIManager {
     private final String producAddedMessage = "product added to shopping cart.\n";
     private final String purchaseMadeMessage = "Thank you for your purchase!\n";
     private final String exitMessage = "We hope to see you again!\n";
+    private final String ERROR_MESSAGE_FILE_PRODUCT = "Error file data/produscts.json\n";
+    private final String ERROR_MESSAGE_FILE_PROVIDER = "Error file data/providers.json\n";
+    private final String ERROR_MESSAGE_ID_NOT_FOUND = "Error invalid id, please try again!\n";
     private final Scanner input = new Scanner(System.in);
     private Error error;
 
@@ -64,6 +67,10 @@ public class ConsoleUIManager {
 
     public void showWelcomeMessage (String name){
         System.out.println(welcomeMessage + name + "!\n\n");
+    }
+
+    public void showErrorIDNotFound(){
+        System.out.println(ERROR_MESSAGE_FILE_PROVIDER);
     }
 
     public String recuetSignInName (){
@@ -121,6 +128,11 @@ public class ConsoleUIManager {
         }
         System.out.println("\n");
         System.out.println("0) Back\n\n");
+    }
+
+    public int recuestOption (){
+        System.out.println(enterOption);
+        return Integer.parseInt(input.nextLine());
     }
 
     public void showListProviders (List<Provider> providers){
@@ -185,4 +197,11 @@ public class ConsoleUIManager {
         System.out.println(exitMessage);
     }
 
+    public void showErrorMessageFileProduct (){
+        System.out.println(ERROR_MESSAGE_FILE_PRODUCT);
+    }
+
+    public void showErrorMessageFileProvider (){
+        System.out.println(ERROR_MESSAGE_FILE_PROVIDER);
+    }
 }

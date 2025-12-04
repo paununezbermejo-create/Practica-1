@@ -40,5 +40,13 @@ public class SaleManager {
         }
     }
 
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    public boolean cheeckFile (){
+        saleCsvDao = new SaleCsvDao();
+        return saleCsvDao.cheekFile();
+    }
 
 }

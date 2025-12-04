@@ -14,16 +14,13 @@ public class ProductManager {
         productList = productJsonDao.readFile();
     }
 
-    public void showAllProducts() {
-        for (Product product : productList) {
-            System.out.println(product.getProductID());
-        }
-
+    public List<Product> getProductList(){
+        return productList;
     }
 
     public List<Product> getProductByName(String name) {
         for (Product product : productList) {
-            if (product.getProductName().equals(name)) {
+            if (product.getProductName().contains(name)) {
                 return productList;
             }
         }
@@ -38,4 +35,10 @@ public class ProductManager {
         }
         return null;
     }
+
+    public boolean cheeckFile (){
+        ProductJsonDao productJsonDao = new ProductJsonDao();
+        return productJsonDao.cheekFile();
+    }
+
 }

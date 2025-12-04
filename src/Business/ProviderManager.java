@@ -1,5 +1,6 @@
 package Business;
 
+import Business.Entities.Product;
 import Business.Entities.ProductProvider;
 import Business.Entities.Provider;
 import Persistance.ProviderJsonDao;
@@ -16,8 +17,18 @@ public class ProviderManager {
         this.providers = providerJsonDao.readFile();
     }
 
-    public List<Provider> listProviders (){
+    public List<Provider> getProviders() {
         return providers;
+    }
+
+    public List<Provider> getProvidersByProduct(Product product) {
+        List<Provider> providerList = new ArrayList<>();
+        for (Provider provider : providers) {
+            if (provider.getProductProviders().contains(product)) {
+                providerList.add(provider);
+            }
+        }
+        return providerList;
     }
 
     public List<ProductProvider> getProductsProvider(int idProvider) {
@@ -82,5 +93,10 @@ public class ProviderManager {
             }
         }
         return false;
+    }
+
+    public boolean cheeckFile(){
+        ProviderJsonDao providerJsonDao = new ProviderJsonDao();
+        return providerJsonDao.cheekFile();
     }
 }
