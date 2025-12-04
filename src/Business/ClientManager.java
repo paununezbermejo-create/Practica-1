@@ -1,6 +1,7 @@
 package Business;
 
 import Business.Entities.Client;
+import Business.Entities.PhoneNumber;
 import Persistance.ClientJsonDao;
 
 import java.util.List;
@@ -14,5 +15,36 @@ public class ClientManager {
         clients = clientJsonDao.readClientFile();
     }
 
+    public void showAllClients(){
+        for (Client client : clients){
+            System.out.println(client.getName());
+        }
+    }
+
+    public void signUp(int clientID, String name, List<PhoneNumber> phones){
+        //Crea cliente
+        Client client = new Client(clientID, name, phones);
+    }
+
+    public Client logIn(int id){
+        //Retornar cliente
+        for (Client client : clients){
+            if(id == client.getClientID()){
+                //Retornar client
+                return client;
+            }
+        }
+        return null;
+    }
+
+    public Client getClientById(int id){
+        for (Client client : clients){
+            if(id == client.getClientID()){
+                //Retornar client
+                return client;
+            }
+        }
+        return null;
+    }
 
 }

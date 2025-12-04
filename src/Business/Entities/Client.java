@@ -8,7 +8,7 @@ public class Client {
     private String full_name;
     private List<PhoneNumber> phone_numbers;
 
-    public Client(int clientID, String name, ArrayList<PhoneNumber> phones) {
+    public Client(int clientID, String name, List<PhoneNumber> phones) {
         this.client_id = clientID;
         this.full_name = name;
         this.phone_numbers = phones;
