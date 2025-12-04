@@ -10,13 +10,11 @@ public class Main{
         ProductJsonDao productDao = new ProductJsonDao();
         ProviderJsonDao providerDao = new ProviderJsonDao();
         SaleCsvDao saleDao = new SaleCsvDao();
-        CartJsonDao cartDao = new CartJsonDao();
 
         ClientManager clientManager = new ClientManager(clientDao);
         ProductManager productManager = new ProductManager(productDao);
         ProviderManager providerManager = new ProviderManager(providerDao);
         SaleManager saleManager = new SaleManager(saleDao);
-        CartManager cartManager = new CartManager(cartDao);
         UIManager uiManager = new UIManager();
 
         Controller c = new Controller (clientManager, productManager, providerManager, saleManager, cartManager, uiManager);
