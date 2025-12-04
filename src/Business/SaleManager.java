@@ -15,8 +15,12 @@ public class SaleManager {
         this.sales = saleCsvDao.readSaleFile();
     }
 
-    public void addSale (List<Sale> ventas) {
+    public void setSales (List<Sale> ventas) {
         sales.addAll(ventas);
+    }
+
+    public void addSale(Sale sale) {
+        sales.add(sale);
     }
 
     public List<Sale> getHistorialClient(int idClient) {

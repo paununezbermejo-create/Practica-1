@@ -15,6 +15,7 @@ public class Main{
         ProductManager productManager = new ProductManager(productDao);
         ProviderManager providerManager = new ProviderManager(providerDao);
         SaleManager saleManager = new SaleManager(saleDao);
+        CartManager cartManager = new  cartManager();
         UIManager uiManager = new UIManager();
 
         Controller c = new Controller (clientManager, productManager, providerManager, saleManager, cartManager, uiManager);

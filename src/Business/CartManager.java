@@ -5,13 +5,18 @@ import Business.Entities.Cart;
 import java.util.List;
 
 public class CartManager {
-    List<Cart> cart;
+    List<Cart> carts;
     public void addToCart(int clientId, String productId, int providerId, double price){
         Cart cart = new Cart(clientId, productId, providerId, price);
-        this.cart.add(cart);
+        this.carts.add(cart);
     }
+
+    public List<Cart> getCarts(){
+        return this.carts;
+    }
+
     public String getProductId (String productId){
-        for (Cart cart : this.cart){
+        for (Cart cart : this.carts){
             if (cart.getProductId().equals(productId)){
                 return cart.getProductId();
             }
@@ -20,7 +25,7 @@ public class CartManager {
     }
 
     public int getClientId (int id){
-        for (Cart cart : this.cart){
+        for (Cart cart : this.carts){
             if (cart.getClientId() == id){
                 return cart.getClientId();
             }
@@ -28,7 +33,7 @@ public class CartManager {
         return 0;
     }
     public int getProviderId (int id){
-        for (Cart cart : this.cart){
+        for (Cart cart : this.carts){
             if (cart.getProviderId() == id){
                 return cart.getProviderId();
             }
@@ -37,7 +42,7 @@ public class CartManager {
     }
 
     public double getPrice (int id){
-        for (Cart cart : this.cart){
+        for (Cart cart : this.carts){
             if (cart.getPrice() == id){
                 return cart.getPrice();
             }

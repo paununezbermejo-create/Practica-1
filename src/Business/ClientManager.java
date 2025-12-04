@@ -19,6 +19,7 @@ public class ClientManager {
         //Crea cliente
         Client client = new Client(clientID, name, phones);
         clients.add(client);
+        clientJsonDao.actualizatClient(clients);
     }
 
     public Client logIn(int id){
@@ -37,6 +38,15 @@ public class ClientManager {
             if(id == client.getClientID()){
                 //Retornar client
                 return client;
+            }
+        }
+        return null;
+    }
+
+    public String getNameById(int id){
+        for (Client client : clients){
+            if(id == client.getClientID()){
+                return client.getName();
             }
         }
         return null;

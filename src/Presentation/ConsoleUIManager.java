@@ -21,7 +21,8 @@ public class ConsoleUIManager {
     private final String enterOption = "Choose an option: ";
     private final String enterLoginId = "Client ID: ";
     private final String enterName = "Full Name: ";
-    private final String enterPhoneNumber = "Phone numbers: ";
+    private final String ENTER_NUM_PHONES = "How many phone number do you have ? ";
+    private final String enterPhoneNumber = "Enter Phone Number: ";
     private final String recuestKeyword = "Search criteria: ";
     private final String enterComfirmationShoppinCart = "Do you want to add this product to the shopping cart? ";
     private final String enterComfirmationPurchase = "Do you want to proceed with the purchase? ";
@@ -30,6 +31,7 @@ public class ConsoleUIManager {
     private final String exitMessage = "We hope to see you again!\n";
     private final String ERROR_MESSAGE_FILE_PRODUCT = "Error file data/produscts.json\n";
     private final String ERROR_MESSAGE_FILE_PROVIDER = "Error file data/providers.json\n";
+    private final String ERROR_MESSAGE_INVALID_PHONE = "Error invalid phone number!\n";
     private final String ERROR_MESSAGE_ID_NOT_FOUND = "Error invalid id, please try again!\n";
     private final Scanner input = new Scanner(System.in);
     private Error error;
@@ -78,9 +80,31 @@ public class ConsoleUIManager {
         return input.nextLine();
     }
 
-    public String recuetPhoneNumber (){
+    public int recuestNumPhones (){
+        System.out.println(ENTER_NUM_PHONES);
+        return Integer.parseInt(input.nextLine());
+    }
+
+    public PhoneNumber recuestPhoneNumber (){
         System.out.println(enterPhoneNumber);
-        return input.nextLine();
+        boolean valid = false;
+        while(!valid){
+            String phoneNumber = input.nextLine();
+            String[] s = phoneNumber.split(" ");
+            if (s[0].length() == 3){
+                if (s[1].length() == 3 && s[2].length() == 3 && s[3].length() == 3){
+                    String phone = s[1] + " " + s[2]  + " " + s[3];
+                    PhoneNumber ph = new PhoneNumber(s[0], phone);
+                    valid = true;
+                    return ph;
+                }else{
+                    System.out.println(ERROR_MESSAGE_INVALID_PHONE);
+                }
+            }else{
+                System.out.println(ERROR_MESSAGE_INVALID_PHONE);
+            }
+        }
+        return null;
     }
 
     public MenuOption2 getMenu2 (){
@@ -166,6 +190,22 @@ public class ConsoleUIManager {
         System.out.println("0) Back\n\n");
     }
 
+    public void showCart (List<Cart> carts, List<Product> products, List<Provider> providers) {
+        double total = 0;
+        for (Cart cart : carts){
+            for (Product product : products){
+                if (cart.getProductId().equals(product.getProductID())){
+                    for (Provider provider : providers){
+                        if (cart.getProviderId() == provider.getProviderId()){
+                            System.out.println("\t\t + "+product.getProductID()+" - "+product.getProductName()+ "   (" + provider.getCompanyName()+ ")" + cart.getPrice() + "\n");
+                            total = cart.getPrice();
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("\t\t\t\t\t\t\t TOTAL PRICE: " + total + "\n\n");
+    }
 
     public boolean recuetComfirmationShoppinCart (){
         System.out.println(enterComfirmationShoppinCart);

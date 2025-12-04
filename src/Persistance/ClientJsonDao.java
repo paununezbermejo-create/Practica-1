@@ -45,10 +45,10 @@ public class ClientJsonDao implements Cheek {
         return false; // ya existía
     }
 
-    public void actualizatClient(Client client) {
+    public void actualizatClient(List<Client> clients) {
         Gson gson = new Gson();
         try (FileWriter fw = new FileWriter(path)) {
-            gson.toJson(client, fw);
+            gson.toJson(clients, fw);
         } catch (IOException e) {
             throw new RuntimeException("Error al actualizar cliente en: " + path, e);
         }
