@@ -6,6 +6,10 @@ import java.util.List;
 
 public class CartManager {
     List<Cart> carts;
+
+    public CartManager() {
+    }
+
     public void addToCart(int clientId, String productId, int providerId, double price){
         Cart cart = new Cart(clientId, productId, providerId, price);
         this.carts.add(cart);
@@ -48,5 +52,25 @@ public class CartManager {
             }
         }
         return 0;
+    }
+    public void showCartAll() {
+        for (Cart cart : carts) {
+            System.out.println(cart.getProductId());
+        }
+    }
+
+    public Cart findCart(int id){
+        double total = 0;
+        for (Cart cart : carts) {
+            if(id == cart.getClientId()){
+                //Retornar cart
+                return cart;
+            }
+        }
+        return null;
+    }
+
+    public void addToCart(int clientId, String productId, int providerId, float price){
+        Cart cart = new Cart(clientId, productId, providerId, price);
     }
 }
