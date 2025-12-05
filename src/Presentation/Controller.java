@@ -16,12 +16,13 @@ public class Controller {
     private ConsoleUIManager ui;
 
     public Controller(ClientManager cm, ProductManager pm, ProviderManager providerManager,
-                      SaleManager sm, CartManager cmart, UIManager uiManager) {
+                      SaleManager sm, CartManager cmart, ConsoleUIManager uiManager) {
         this.cm = cm;
         this.pm = pm;
         this.providerManager = providerManager;
         this.sm = sm;
         this.cmart = cmart;
+        this.ui = uiManager;
     }
 
     public void Start() {
@@ -74,7 +75,8 @@ public class Controller {
         String name = ui.recuetSignInName();
         List <PhoneNumber> phones = new ArrayList<>();
         int i = 1;
-        for (int j = 0; j < ui.recuestNumPhones(); j++){
+        int x = ui.recuestNumPhones();
+        for (int j = 0; j < x; j++){
             phones.add(ui.recuestPhoneNumber());
         }
         while (cm.getClientById(i) != null){
@@ -101,24 +103,25 @@ public class Controller {
             switch (ui.getMenu2()) {
 
                 case User_Profile:
-                    ui.showClientProfile(cm.getClientById(id), sm.getSales());
+                    ui.showClientProfile(cm.getClientById(id), sm.getSales(), pm.getProductList());
+                    ui.showHistorial(sm.getHistorialClient(id), pm.getProductList());
                     break;
 
                 case Find_Products_By_Name:
                     p = pm.getProductByName(ui.recuestProductKeyWord());
                     ui.showListProducts(p);
-
                     op = ui.recuestOption();
-                    if (op != 0) {
-                        pv = providerManager.getProvidersByProduct(p.get(op));
-                        ui.showListProviders(pv);
 
+                    if (op != 0) {
+                        pv = providerManager.getProvidersByProduct(p.get(op -1));
+                        ui.showProductInfo(p.get(op-1));
+                        ui.showProductInfoByProviders(pv, p.get(op-1));
                         op_2 = ui.recuestOption();
                         if (op_2 != 0) {
                             cmart.addToCart(id,
-                                    p.get(op).getProductID(),
-                                    pv.get(op_2).getProviderId(),
-                                    providerManager.getPrice(pv.get(op_2).getProviderId(), p.get(op).getProductID())
+                                    p.get(op -1).getProductID(),
+                                    pv.get(op_2-1).getProviderId(),
+                                    providerManager.getPrice(pv.get(op_2-1).getProviderId(), p.get(op-1).getProductID())
                             );
                             if (ui.recuetComfirmationShoppinCart()) ui.showProductAddedMessage();
                         }
@@ -173,5 +176,5 @@ public class Controller {
 
         } while (active_2);
     }
-}
 
+}

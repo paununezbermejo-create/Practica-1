@@ -1,32 +1,32 @@
 package Business.Entities;
 
 public class ProductProvider {
-    String productId;
-    double price;
-    int stock;
+    String product_id;
+    double selling_price;
+    int units_in_stock;
     public ProductProvider(String productId, double price, int stock) {
-        this.productId = productId;
-        this.price = price;
-        this.stock = stock;
+        this.product_id = productId;
+        this.selling_price = price;
+        this.units_in_stock = stock;
     }
 
     public String getProductId() {
-        return this.productId;
+        return this.product_id;
     }
 
     public double getPrice() {
-        return this.price;
+        return this.selling_price;
     }
 
     public int getStock() {
-        return this.stock;
+        return this.units_in_stock;
     }
 
     public void reduceStock(int stock) {
-        this.stock -= stock;
+        this.units_in_stock -= stock;
     }
 
     public boolean checkStock() {
-        return this.stock != 0;
+        return this.units_in_stock != 0;
     }
 }

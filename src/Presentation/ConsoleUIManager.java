@@ -7,15 +7,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUIManager {
-    private final String menu1Message = "\t\t1) Login\n" +
+    private final String menu1Message =
+            "\t\t1) Login\n" +
             "\t\t2) Sign up\n\n" +
             "\t\t0) Exit \n\n";
-    private final String menu2Message = "\t\t1)  1) User profile \n" +
+    private final String menu2Message =
+            "\t\t1) User profile \n" +
             "\t\t2) Find products by name \n" +
             "\t\t3) Find products by provider \n" +
-            "\t\t4) Shopping cart \n" +
-            "\n" +
-            "\t\t0) Logout ";
+            "\t\t4) Shopping cart \n\n" +
+            "\t\t0) Logout\n";
     private final String welcomeMessage = "Welcome ";
     private final String statingMessage = "Starting program...\n\n";
     private final String enterOption = "Choose an option: ";
@@ -40,7 +41,7 @@ public class ConsoleUIManager {
     public MenuOption1 getMenu1 (){
         switch (statingMessage){}
         do {
-            System.out.println(menu1Message);
+            System.out.print(menu1Message);
             System.out.print(enterOption);
             try {
                 int option = input.nextInt();
@@ -48,45 +49,45 @@ public class ConsoleUIManager {
                     case 0: return MenuOption1.Exit;
                     case 1: return MenuOption1.Login;
                     case 2: return MenuOption1.Sign_up;
-                    default: System.out.println(error.ERROR_WRONG_OPTION.getMessage());
+                    default: System.out.print(error.ERROR_WRONG_OPTION.getMessage());
                 }
             } catch (NumberFormatException e) {
-                System.out.println(error.ERROR_WRONG_OPTION.getMessage());
+                System.out.print(error.ERROR_WRONG_OPTION.getMessage());
             }
         } while(true);
     }
 
     public int recuestIdLogin (){
-        System.out.println(enterLoginId);
+        System.out.print(enterLoginId);
         try {
-            int id = Integer.parseInt(input.nextLine());
+            int id = input.nextInt();
             return id;
         } catch (NumberFormatException e) {
-            System.out.println("Please enter a valid ID");
+            System.out.print("Please enter a valid ID");
             return 0;
         }
     }
 
     public void showWelcomeMessage (String name){
-        System.out.println(welcomeMessage + name + "!\n\n");
+        System.out.print(welcomeMessage + name + "!\n\n");
     }
 
     public void showErrorIDNotFound(){
-        System.out.println(ERROR_MESSAGE_FILE_PROVIDER);
+        System.out.print(ERROR_MESSAGE_FILE_PROVIDER);
     }
 
     public String recuetSignInName (){
-        System.out.println(enterName);
+        System.out.print(enterName);
         return input.nextLine();
     }
 
     public int recuestNumPhones (){
-        System.out.println(ENTER_NUM_PHONES);
+        System.out.print(ENTER_NUM_PHONES);
         return Integer.parseInt(input.nextLine());
     }
 
     public PhoneNumber recuestPhoneNumber (){
-        System.out.println(enterPhoneNumber);
+        System.out.print(enterPhoneNumber);
         boolean valid = false;
         while(!valid){
             String phoneNumber = input.nextLine();
@@ -98,10 +99,10 @@ public class ConsoleUIManager {
                     valid = true;
                     return ph;
                 }else{
-                    System.out.println(ERROR_MESSAGE_INVALID_PHONE);
+                    System.out.print(ERROR_MESSAGE_INVALID_PHONE);
                 }
             }else{
-                System.out.println(ERROR_MESSAGE_INVALID_PHONE);
+                System.out.print(ERROR_MESSAGE_INVALID_PHONE);
             }
         }
         return null;
@@ -109,7 +110,7 @@ public class ConsoleUIManager {
 
     public MenuOption2 getMenu2 (){
         do {
-            System.out.println(menu2Message);
+            System.out.print(menu2Message);
             System.out.print(enterOption);
             try {
                 int option = input.nextInt();
@@ -119,75 +120,102 @@ public class ConsoleUIManager {
                     case 2: return MenuOption2.Find_Products_By_Name;
                     case 3: return MenuOption2.Find_Products_By_Provider;
                     case 4: return MenuOption2.Shopping_Cart;
-                    default: System.out.println(error.ERROR_WRONG_OPTION.getMessage());
+                    default: System.out.print(error.ERROR_WRONG_OPTION.getMessage());
                 }
             }catch (NumberFormatException e) {
-                System.out.println(error.ERROR_WRONG_OPTION.getMessage());
+                System.out.print(error.ERROR_WRONG_OPTION.getMessage());
             }
         }while(true);
     }
 
-    public void showClientProfile (Client client, List<Sale> sales){
-        System.out.println("--| User Profile | --\n\n");
-        System.out.println("Client ID: " +client.getClientID());
-        System.out.println("Full name: " +client.getClientID());
-        System.out.println("Phone numbers:\n");
+    public void showClientProfile (Client client, List<Sale> sales, List <Product> products) {
+        System.out.print("\n\n--| User Profile |--\n\n");
+        System.out.print("Client ID: " +client.getClientID());
+        System.out.print("Full name: " +client.getName());
+        System.out.print("Phone numbers:\n");
         for (PhoneNumber phoneNumber : client.getPhones()){
-            System.out.println("("+phoneNumber.getPrefix()+")" + " " + phoneNumber.getNumber() + "\n");
+            System.out.print("\t("+phoneNumber.getPrefix()+")" + " " + phoneNumber.getNumber() + "\n");
         }
-        System.out.println("\n");
-        System.out.println("Shopping history:");
+        System.out.print("\nShopping history:\n");
     }
 
-
     public String recuestProductKeyWord (){
-        System.out.println(recuestKeyword);
+        String trash = input.nextLine();
+        System.out.print(recuestKeyword);
         return input.nextLine();
     }
 
     public void showListProducts (List<Product> products){
+
         int i = 1;
+        System.out.print("\n");
         for (Product product : products){
-            System.out.println("\t\t"+i+") " + product.getProductName() + "\n");
+            System.out.print("\t"+i+") " + product.getProductName() + "\n");
+            i++;
         }
-        System.out.println("\n");
-        System.out.println("0) Back\n\n");
+        System.out.print("\n\t0) Back\n\n");
+    }
+
+    public void showProductInfo (Product product){
+        System.out.println("Product ID: " + product.getProductID() + ",");
+        System.out.println("Name: " + product.getProductName() + ",");
+        System.out.println("Brand: " + product.getBrand() + ",");
+        System.out.println("Model: " + product.getModel() + ",");
+        System.out.println("Providers:\n");
+    }
+
+    public void showProductInfoByProviders (List<Provider> provider, Product product){
+        int i = 1;
+        for (Provider p : provider){
+            System.out.print("\t"+i+") " + p.getCompanyName() + "\n");
+            for(ProductProvider pv : p.getProductProviders()){
+                if (pv.getProductId().equals(product.getProductID())){
+                    System.out.println("\t\t - Sale price: " + pv.getPrice() + "€,");
+                    System.out.println("\t\t - Available stock: " + pv.getStock());
+                }
+            }
+            i++;
+        }
+        System.out.print("\n");
+        System.out.print("0) Back\n\n");
     }
 
     public int recuestOption (){
-        System.out.println(enterOption);
-        return Integer.parseInt(input.nextLine());
+        System.out.print(enterOption);
+        return input.nextInt();
     }
+
 
     public void showListProviders (List<Provider> providers){
         int i = 1;
         for (Provider provider : providers){
-            System.out.println("\t\t"+i+") " + provider.getCompanyName() + "\n");
+            System.out.print("\t"+i+") " + provider.getCompanyName() + "\n");
+            i++;
         }
-        System.out.println("\n");
-        System.out.println("0) Back\n\n");
+        System.out.print("\n");
+        System.out.print("0) Back\n\n");
     }
 
     public void showListlProductsProvider (List<ProductProvider> productsP, List<Product> products){
         int j = 0;
         int x = 1;
-        System.out.println("Provider products:\n");
+        System.out.print("Provider products:\n");
         for (int i = 0; i < productsP.size(); i++){
             for(j = 0; j < products.size(); j++){
-                if (products.get(j).getProductID().equals(products.get(i).getProductID())){
-                    System.out.println("\t\t"+x+") "
+                if (products.get(j).getProductID().equals(products.get(i).getProductID()) && productsP.get(i).checkStock()){
+                    System.out.print("\t"+x+") "
                             + products.get(j).getProductID() + " - "
                             + products.get(j).getProductName() +"\n");
-                    System.out.println("\t\t" + " - Sale price: "
+                    System.out.print("\t\t" + " - Sale price: "
                             + productsP.get(i).getPrice() + "€,");
-                    System.out.println("\t\t" + " - Available stock: "
-                            + productsP.get(i).checkStock() + "\n");
+                    System.out.print("\t\t" + " - Available stock: "
+                            + productsP.get(i).getStock() + "\n");
                     x++;
                 }
             }
         }
-        System.out.println("\n");
-        System.out.println("0) Back\n\n");
+        System.out.print("\n");
+        System.out.print("0) Back\n\n");
     }
 
     public void showCart (List<Cart> carts, List<Product> products, List<Provider> providers) {
@@ -197,18 +225,18 @@ public class ConsoleUIManager {
                 if (cart.getProductId().equals(product.getProductID())){
                     for (Provider provider : providers){
                         if (cart.getProviderId() == provider.getProviderId()){
-                            System.out.println("\t\t + "+product.getProductID()+" - "+product.getProductName()+ "   (" + provider.getCompanyName()+ ")" + cart.getPrice() + "\n");
+                            System.out.print("\t + "+product.getProductID()+" - "+product.getProductName()+ "   (" + provider.getCompanyName()+ ")" + cart.getPrice() + "\n");
                             total = cart.getPrice();
                         }
                     }
                 }
             }
         }
-        System.out.println("\t\t\t\t\t\t\t TOTAL PRICE: " + total + "\n\n");
+        System.out.print("\t\t\t TOTAL PRICE: " + total + "\n\n");
     }
 
     public boolean recuetComfirmationShoppinCart (){
-        System.out.println(enterComfirmationShoppinCart);
+        System.out.print(enterComfirmationShoppinCart);
         if (input.nextLine().equals("Yes")){
             return true;
         }else{
@@ -223,6 +251,22 @@ public class ConsoleUIManager {
         }else{
             return false;
         }
+    }
+
+    public void showHistorial (List<Sale> sales, List<Product> products){
+        for (Sale sale : sales){
+            for (Product product : products){
+                if (sale.getProductId().equals(product.getProductID())){
+                    System.out.print("\t "
+                            + product.getProductName()
+                            + " - " + product.getBrand()
+                            + " (" + sale.getClientId() + ") €"
+                            + sale.getPrice() + " - "
+                            + sale.getPurchaseDate() +"\n");
+                }
+            }
+        }
+        System.out.print("\n");
     }
 
     public void showProductAddedMessage (){

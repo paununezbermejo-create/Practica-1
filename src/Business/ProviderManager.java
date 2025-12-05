@@ -24,8 +24,10 @@ public class ProviderManager {
     public List<Provider> getProvidersByProduct(Product product) {
         List<Provider> providerList = new ArrayList<>();
         for (Provider provider : providers) {
-            if (provider.getProductProviders().contains(product)) {
-                providerList.add(provider);
+            for(ProductProvider p : provider.getProductProviders()) {
+                if (p.getProductId().equals(product.getProductID())){
+                    providerList.add(provider);
+                }
             }
         }
         return providerList;

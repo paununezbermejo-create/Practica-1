@@ -3,6 +3,7 @@ package Business;
 import Business.Entities.Product;
 import Persistance.ProductJsonDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductManager {
@@ -19,12 +20,13 @@ public class ProductManager {
     }
 
     public List<Product> getProductByName(String name) {
+        List<Product> p = new ArrayList<>();
         for (Product product : productList) {
             if (product.getProductName().contains(name)) {
-                return productList;
+                p.add(product);
             }
         }
-        return null;
+        return p;
     }
 
     public Product getProductById(String id) {

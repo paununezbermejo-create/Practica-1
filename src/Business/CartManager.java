@@ -2,12 +2,14 @@ package Business;
 
 import Business.Entities.Cart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartManager {
     List<Cart> carts;
 
     public CartManager() {
+        carts = new ArrayList<>();
     }
 
     public void addToCart(int clientId, String productId, int providerId, double price){

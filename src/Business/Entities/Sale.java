@@ -30,9 +30,4 @@ public class Sale {
         return purchaseDate;
     }
 
-    public double getTotalPrice() {
-        return price * purchaseDate;
-    }
-
-
 }
