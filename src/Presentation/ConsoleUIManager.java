@@ -303,7 +303,7 @@ public class ConsoleUIManager {
             for (Sale sale : sales){
                 for (Product product : products){
                     if (sale.getProductId().equals(product.getProductID())){
-                        Date date = new Date(sale.getPurchaseDate());
+                        Date date = new Date(sale.getPurchaseDate() * 1000L);;
                         System.out.print("\t "
                                 + product.getProductName()
                                 + " - " + product.getBrand()

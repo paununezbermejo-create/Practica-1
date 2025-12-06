@@ -165,7 +165,7 @@ public class Controller {
                     ui.showCart(cmart.getCarts(), p, pv);
                     if (!cmart.getCarts().isEmpty()) {
                         if (ui.recuetComfirmationPurchase()) {
-                            long ts = System.currentTimeMillis();
+                            long ts = System.currentTimeMillis() / 1000L;;
 
                             for (Cart c : cmart.getCarts()) {
                                 sm.addSale(new Sale(id, c.getProductId(), c.getPrice(), ts));

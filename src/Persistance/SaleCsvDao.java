@@ -35,7 +35,7 @@ public class SaleCsvDao implements Cheek {
 
     public void addSale(Sale sale) {
         try (FileWriter fw = new FileWriter(path, true)) { // true = append
-            String text = String.format("%d,%s,%.2f,%s",
+            String text = String.format("%d,%s,%f,%s",
                     sale.getClientId(),
                     sale.getProductId(),
                     sale.getPrice(),
