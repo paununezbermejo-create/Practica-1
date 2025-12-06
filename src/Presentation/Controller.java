@@ -29,8 +29,9 @@ public class Controller {
         boolean active_1 = true;
         int id = 0;
 
+        ui.showPresentationMessage();
         if (providerManager.cheeckFile() && pm.cheeckFile()) {
-
+            ui.showValidFiles();
             do {
                 switch (ui.getMenu1()) {
 
@@ -56,6 +57,7 @@ public class Controller {
         } else {
             if (!providerManager.cheeckFile()) ui.showErrorMessageFileProvider();
             if (!pm.cheeckFile()) ui.showErrorMessageFileProduct();
+            ui.showShuttingDown();
         }
     }
 
@@ -72,7 +74,9 @@ public class Controller {
     }
 
     private int signUpUser() {
+
         String name = ui.recuetSignInName();
+
         List <PhoneNumber> phones = new ArrayList<>();
         int i = 1;
         int x = ui.recuestNumPhones();
@@ -80,14 +84,10 @@ public class Controller {
             phones.add(ui.recuestPhoneNumber());
         }
         while (cm.getClientById(i) != null){
-            if (cm.getClientById(i) != null){
-                cm.signUp(i, name, phones);
-                return i;
-            }else{
-                i++;
-            }
+            i++;
         }
-        return 0;
+        cm.signUp(i, name, phones);
+        return i;
     }
 
     private void startMenu2(int id) {
@@ -118,12 +118,16 @@ public class Controller {
                         ui.showProductInfoByProviders(pv, p.get(op-1));
                         op_2 = ui.recuestOption();
                         if (op_2 != 0) {
-                            cmart.addToCart(id,
-                                    p.get(op -1).getProductID(),
-                                    pv.get(op_2-1).getProviderId(),
-                                    providerManager.getPrice(pv.get(op_2-1).getProviderId(), p.get(op-1).getProductID())
-                            );
-                            if (ui.recuetComfirmationShoppinCart()) ui.showProductAddedMessage();
+                            if (ui.recuetComfirmationShoppinCart()){
+                                cmart.addToCart(id,
+                                        p.get(op -1).getProductID(),
+                                        pv.get(op_2-1).getProviderId(),
+                                        providerManager.getPrice(pv.get(op_2-1).getProviderId(), p.get(op-1).getProductID())
+                                );
+                                ui.showProductAddedMessage();
+                            }
+
+
                         }
                     }
                     break;
@@ -134,19 +138,22 @@ public class Controller {
 
                     op = ui.recuestOption();
                     if (op != 0) {
-                        pmv = providerManager.getProductsProvider(pv.get(op).getProviderId());
+                        ui.showProviderInfo(pv.get(op-1));
+                        pmv = providerManager.getProductsProvider(pv.get(op -1).getProviderId());
                         p = pm.getProductList();
 
                         ui.showListlProductsProvider(pmv, p);
 
                         op_2 = ui.recuestOption();
                         if (op_2 != 0) {
-                            cmart.addToCart(id,
-                                    p.get(op_2).getProductID(),
-                                    pv.get(op).getProviderId(),
-                                    providerManager.getPrice(pv.get(op).getProviderId(), p.get(op_2).getProductID())
-                            );
-                            if (ui.recuetComfirmationShoppinCart()) ui.showProductAddedMessage();
+                            if (ui.recuetComfirmationShoppinCart()){
+                                cmart.addToCart(id,
+                                        p.get(op_2-1).getProductID(),
+                                        pv.get(op-1).getProviderId(),
+                                        pmv.get(op_2-1).getPrice()
+                                );
+                                ui.showProductAddedMessage();
+                            }
                         }
                     }
                     break;
@@ -156,19 +163,22 @@ public class Controller {
                     p = pm.getProductList();
 
                     ui.showCart(cmart.getCarts(), p, pv);
+                    if (!cmart.getCarts().isEmpty()) {
+                        if (ui.recuetComfirmationPurchase()) {
+                            long ts = System.currentTimeMillis();
 
-                    if (ui.recuetComfirmationPurchase()) {
-                        long ts = System.currentTimeMillis();
-
-                        for (Cart c : cmart.getCarts()) {
-                            sm.addSale(new Sale(id, c.getProductId(), c.getPrice(), ts));
+                            for (Cart c : cmart.getCarts()) {
+                                sm.addSale(new Sale(id, c.getProductId(), c.getPrice(), ts));
+                                providerManager.reduceStock(c.getProviderId(), c.getProductId());
+                            }
+                            providerManager.actualizaStockFile();
+                            ui.showPurchaseMadeMessage();
                         }
-
-                        ui.showPurchaseMadeMessage();
                     }
                     break;
 
                 case Exit:
+                    cmart.clearCarts();
                     ui.showExitMessage();
                     active_2 = false;
                     break;

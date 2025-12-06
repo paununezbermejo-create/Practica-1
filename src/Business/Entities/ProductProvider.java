@@ -22,8 +22,10 @@ public class ProductProvider {
         return this.units_in_stock;
     }
 
-    public void reduceStock(int stock) {
-        this.units_in_stock -= stock;
+    public void reduceStock() {
+        if (checkStock()){
+            this.units_in_stock -= 1;
+        }
     }
 
     public boolean checkStock() {

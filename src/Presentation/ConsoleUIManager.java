@@ -3,10 +3,13 @@ package Presentation;
 import Business.Entities.*;
 
 import java.awt.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUIManager {
+    private final String SHUTTING_DOWN_MESSAGE = "Shutting Down...";
     private final String menu1Message =
             "\t\t1) Login\n" +
             "\t\t2) Sign up\n\n" +
@@ -16,9 +19,9 @@ public class ConsoleUIManager {
             "\t\t2) Find products by name \n" +
             "\t\t3) Find products by provider \n" +
             "\t\t4) Shopping cart \n\n" +
-            "\t\t0) Logout\n";
-    private final String welcomeMessage = "Welcome ";
-    private final String statingMessage = "Starting program...\n\n";
+            "\t\t0) Logout\n\n";
+    private final String welcomeMessage = "\nWelcome ";
+    private final String statingMessage = "Starting program...\n";
     private final String enterOption = "Choose an option: ";
     private final String enterLoginId = "Client ID: ";
     private final String enterName = "Full Name: ";
@@ -27,16 +30,41 @@ public class ConsoleUIManager {
     private final String recuestKeyword = "Search criteria: ";
     private final String enterComfirmationShoppinCart = "Do you want to add this product to the shopping cart? ";
     private final String enterComfirmationPurchase = "Do you want to proceed with the purchase? ";
-    private final String producAddedMessage = "product added to shopping cart.\n";
+    private final String producAddedMessage = "Product added to shopping cart.\n";
     private final String purchaseMadeMessage = "Thank you for your purchase!\n";
     private final String exitMessage = "We hope to see you again!\n";
     private final String ERROR_MESSAGE_FILE_PRODUCT = "Error file data/produscts.json\n";
     private final String ERROR_MESSAGE_FILE_PROVIDER = "Error file data/providers.json\n";
     private final String ERROR_MESSAGE_INVALID_PHONE = "Error invalid phone number!\n";
     private final String ERROR_MESSAGE_ID_NOT_FOUND = "Error invalid id, please try again!\n";
+    private final String NO_PRODUCTS_IN_CART_MESSAGE = "There are no products in the shopping cart.\n";
+    private final String NO_PURCHASED_MADE_MESSAGE = "No purchasses made.\n";
+
     private final Scanner input = new Scanner(System.in);
     private Error error;
 
+    public void showPresentationMessage (){
+        System.out.println(
+                " _   _           _        _____             ____            _           _   \n" +
+                        "| \\ | |_   _  __| | ___  | ____|   _  ___  |  _ \\ _ __ ___ (_) ___  ___| |_ \n" +
+                        "|  \\| | | | |/ _` |/ _ \\ |  _|| | | |/ _ \\ | |_) | '__/ _ \\| |/ _ \\/ __| __|\n" +
+                        "| |\\  | |_| | (_| |  __/ | |__| |_| |  __/ |  __/| | | (_) | |  __/ (__| |_ \n" +
+                        "|_| \\_|\\__,_|\\__,_|\\___| |_____\\__, |\\___| |_|   |_|  \\___// |\\___|\\___|\\__|\n" +
+                        "                               |___/                     |__/               \n" +
+                        "Welcome to Nude Eye Project.\n" +
+                        "“by glass wearers for glass wearers”\n" +
+                        "Verifying local files..."
+        );
+    }
+
+    public void showValidFiles () {
+        System.out.println("Files Ok.");
+        System.out.println(statingMessage);
+    }
+
+    public void showShuttingDown () {
+        System.out.println(SHUTTING_DOWN_MESSAGE);
+    }
 
     public MenuOption1 getMenu1 (){
         switch (statingMessage){}
@@ -63,7 +91,7 @@ public class ConsoleUIManager {
             int id = input.nextInt();
             return id;
         } catch (NumberFormatException e) {
-            System.out.print("Please enter a valid ID");
+            System.out.print(ERROR_MESSAGE_ID_NOT_FOUND);
             return 0;
         }
     }
@@ -77,6 +105,7 @@ public class ConsoleUIManager {
     }
 
     public String recuetSignInName (){
+        String trash = input.nextLine();
         System.out.print(enterName);
         return input.nextLine();
     }
@@ -130,9 +159,9 @@ public class ConsoleUIManager {
 
     public void showClientProfile (Client client, List<Sale> sales, List <Product> products) {
         System.out.print("\n\n--| User Profile |--\n\n");
-        System.out.print("Client ID: " +client.getClientID());
-        System.out.print("Full name: " +client.getName());
-        System.out.print("Phone numbers:\n");
+        System.out.println("Client ID: " +client.getClientID());
+        System.out.println("Full name: " +client.getName());
+        System.out.println("Phone numbers:\n");
         for (PhoneNumber phoneNumber : client.getPhones()){
             System.out.print("\t("+phoneNumber.getPrefix()+")" + " " + phoneNumber.getNumber() + "\n");
         }
@@ -150,7 +179,7 @@ public class ConsoleUIManager {
         int i = 1;
         System.out.print("\n");
         for (Product product : products){
-            System.out.print("\t"+i+") " + product.getProductName() + "\n");
+            System.out.print("\t"+i+") " +product.getProductID() + " - " + product.getProductName() + "\n");
             i++;
         }
         System.out.print("\n\t0) Back\n\n");
@@ -177,7 +206,7 @@ public class ConsoleUIManager {
             i++;
         }
         System.out.print("\n");
-        System.out.print("0) Back\n\n");
+        System.out.print("\t0) Back\n\n");
     }
 
     public int recuestOption (){
@@ -188,26 +217,34 @@ public class ConsoleUIManager {
 
     public void showListProviders (List<Provider> providers){
         int i = 1;
+        System.out.print("\n");
         for (Provider provider : providers){
             System.out.print("\t"+i+") " + provider.getCompanyName() + "\n");
             i++;
         }
         System.out.print("\n");
-        System.out.print("0) Back\n\n");
+        System.out.print("\t0) Back\n\n");
+    }
+
+    public void showProviderInfo(Provider provider){
+        System.out.println("\nName: " + provider.getCompanyName() + ",");
+        System.out.println("CIF: " + provider.getCif() + ",");
+        System.out.println("Contact person: " + provider.getContactName() + ",");
+        System.out.println("Phone number: " + provider.getPhone() + ",");
+        System.out.println("Contact email: " + provider.getEmail() + ",");
     }
 
     public void showListlProductsProvider (List<ProductProvider> productsP, List<Product> products){
-        int j = 0;
         int x = 1;
-        System.out.print("Provider products:\n");
+        System.out.println("Provider products:\n");
         for (int i = 0; i < productsP.size(); i++){
-            for(j = 0; j < products.size(); j++){
+            for(int j = 0; j < products.size(); j++){
                 if (products.get(j).getProductID().equals(products.get(i).getProductID()) && productsP.get(i).checkStock()){
                     System.out.print("\t"+x+") "
                             + products.get(j).getProductID() + " - "
                             + products.get(j).getProductName() +"\n");
                     System.out.print("\t\t" + " - Sale price: "
-                            + productsP.get(i).getPrice() + "€,");
+                            + productsP.get(i).getPrice() + "€,\n");
                     System.out.print("\t\t" + " - Available stock: "
                             + productsP.get(i).getStock() + "\n");
                     x++;
@@ -215,27 +252,32 @@ public class ConsoleUIManager {
             }
         }
         System.out.print("\n");
-        System.out.print("0) Back\n\n");
+        System.out.print("\t0) Back\n\n");
     }
 
     public void showCart (List<Cart> carts, List<Product> products, List<Provider> providers) {
         double total = 0;
-        for (Cart cart : carts){
-            for (Product product : products){
-                if (cart.getProductId().equals(product.getProductID())){
-                    for (Provider provider : providers){
-                        if (cart.getProviderId() == provider.getProviderId()){
-                            System.out.print("\t + "+product.getProductID()+" - "+product.getProductName()+ "   (" + provider.getCompanyName()+ ")" + cart.getPrice() + "\n");
-                            total = cart.getPrice();
+        if (!carts.isEmpty()){
+            for (Cart cart : carts){
+                for (Product product : products){
+                    if (cart.getProductId().equals(product.getProductID())){
+                        for (Provider provider : providers){
+                            if (cart.getProviderId() == provider.getProviderId()){
+                                System.out.print("\t + "+product.getProductID()+" - "+product.getProductName()+ " \t\t(" + provider.getCompanyName()+ ")\t\t\t" + cart.getPrice() + "€\n");
+                                total += cart.getPrice();
+                            }
                         }
                     }
                 }
             }
+            System.out.print("\t\t\t\t\t\t\t\t\t\t\t\t\t  TOTAL PRICE: " + total + "€\n\n");
+        }else{
+            System.out.println("\n" + NO_PRODUCTS_IN_CART_MESSAGE);
         }
-        System.out.print("\t\t\t TOTAL PRICE: " + total + "\n\n");
     }
 
     public boolean recuetComfirmationShoppinCart (){
+        String trash = input.nextLine();
         System.out.print(enterComfirmationShoppinCart);
         if (input.nextLine().equals("Yes")){
             return true;
@@ -245,7 +287,8 @@ public class ConsoleUIManager {
     }
 
     public boolean recuetComfirmationPurchase (){
-        System.out.println(enterComfirmationPurchase);
+        String trash = input.nextLine();
+        System.out.print(enterComfirmationPurchase);
         if (input.nextLine().equals("Yes")){
             return true;
         }else{
@@ -253,20 +296,27 @@ public class ConsoleUIManager {
         }
     }
 
-    public void showHistorial (List<Sale> sales, List<Product> products){
-        for (Sale sale : sales){
-            for (Product product : products){
-                if (sale.getProductId().equals(product.getProductID())){
-                    System.out.print("\t "
-                            + product.getProductName()
-                            + " - " + product.getBrand()
-                            + " (" + sale.getClientId() + ") €"
-                            + sale.getPrice() + " - "
-                            + sale.getPurchaseDate() +"\n");
+    public void showHistorial(List<Sale> sales, List<Product> products){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy – HH:mm");
+
+        if (!sales.isEmpty()){
+            for (Sale sale : sales){
+                for (Product product : products){
+                    if (sale.getProductId().equals(product.getProductID())){
+                        Date date = new Date(sale.getPurchaseDate());
+                        System.out.print("\t "
+                                + product.getProductName()
+                                + " - " + product.getBrand()
+                                + " (" + sale.getProductId() + ") €"
+                                + sale.getPrice() + " - "
+                                + sdf.format(date) + "\n");
+                    }
                 }
             }
+            System.out.print("\n");
+        } else {
+            System.out.println(NO_PURCHASED_MADE_MESSAGE);
         }
-        System.out.print("\n");
     }
 
     public void showProductAddedMessage (){

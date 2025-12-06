@@ -75,4 +75,9 @@ public class CartManager {
     public void addToCart(int clientId, String productId, int providerId, float price){
         Cart cart = new Cart(clientId, productId, providerId, price);
     }
+
+    public void clearCarts() {
+        carts.clear();
+    }
+
 }

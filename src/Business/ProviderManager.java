@@ -50,7 +50,7 @@ public class ProviderManager {
             if (provider.getProviderId() == idProvider) {
                 for (ProductProvider productProvider : provider.getProductProviders()) {
                     if (productProvider.getProductId().equals(product_id)) {
-                        return productProvider.getPrice();
+                        return productProvider.getPrice()*1.21;
                     }
                 }
             }
@@ -58,25 +58,15 @@ public class ProviderManager {
         return 0;
     }
 
-    public int getStock (int idProvider, String product_id) {
-        for (Provider provider : providers) {
-            if (provider.getProviderId() == idProvider) {
-                for (ProductProvider productProvider : provider.getProductProviders()) {
-                    if (productProvider.getProductId().equals(product_id)) {
-                        return productProvider.getStock();
-                    }
-                }
-            }
-        }
-        return 0;
-    }
 
-    public void reduceStock (int idProvider, String product_id, int quantity) {
-        for  (Provider provider : providers) {
-            if (provider.getProviderId() == idProvider) {
-                for (ProductProvider productProvider : provider.getProductProviders()) {
-                    if (productProvider.getProductId().equals(product_id)) {
-                        productProvider.reduceStock(quantity);
+    public void reduceStock (int idProvider, String product_id) {
+        if (cheekStock(idProvider, product_id)){
+            for  (Provider provider : providers) {
+                if (provider.getProviderId() == idProvider) {
+                    for (ProductProvider productProvider : provider.getProductProviders()) {
+                        if (productProvider.getProductId().equals(product_id)) {
+                            productProvider.reduceStock();
+                        }
                     }
                 }
             }
@@ -95,6 +85,10 @@ public class ProviderManager {
             }
         }
         return false;
+    }
+
+    public void actualizaStockFile (){
+        providerJsonDao.actualizaStock(this.providers);
     }
 
     public boolean cheeckFile(){

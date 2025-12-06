@@ -20,23 +20,20 @@ public class SaleManager {
     }
 
     public void addSale(Sale sale) {
-        sales.add(sale);
+        saleCsvDao.addSale(sale);
     }
 
     public List<Sale> getHistorialClient(int idClient) {
         List<Sale> filtradas = new ArrayList<>();
 
-        // Recolectar todas las ventas de ese cliente
         for (Sale sale : sales) {
             if (sale.getClientId() == idClient) {
                 filtradas.add(sale);
             }
         }
 
-        // Ordenar por fecha (descendente)
         filtradas.sort((a, b) -> Long.compare(b.getPurchaseDate(), a.getPurchaseDate()));
 
-        // Devolver máximo 10
         if (filtradas.size() > 10) {
             return filtradas.subList(0, 10);
         } else {
@@ -52,5 +49,6 @@ public class SaleManager {
         saleCsvDao = new SaleCsvDao();
         return saleCsvDao.cheekFile();
     }
+
 
 }

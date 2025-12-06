@@ -43,17 +43,6 @@ public class Provider {
         return this.products_for_sale;
     }
 
-    public void reduceStock(String id, int quantity) {
-        for (ProductProvider p : this.products_for_sale) {
-            if (p.getProductId().equals(id)) {
-                if (p.checkStock()){
-                    p.reduceStock(quantity);
-                    break;
-                }
-            }
-        }
-    }
-
     public ProductProvider getPtoductById(String id){
         for (ProductProvider p : this.products_for_sale) {
             if (p.getProductId().equals(id)) {
@@ -62,4 +51,20 @@ public class Provider {
         }
         return null;
     }
+
+    public boolean cheekStock (String product_id) {
+        if (getPtoductById(product_id).checkStock()) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void reduceStock(String id) {
+        if (cheekStock(id)) {
+            getPtoductById(id).reduceStock();
+        }
+    }
+
+
 }
