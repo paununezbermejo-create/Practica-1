@@ -17,6 +17,7 @@ import java.util.List;
 public class ProviderJsonDao implements Cheek {
     private final String path = "data/providers.json";
 
+    //Funcio que llegeix el fitxer i retorna els proveidors guardats
     public List<Provider> readFile() {
         Gson gson = new Gson();
 
@@ -32,6 +33,7 @@ public class ProviderJsonDao implements Cheek {
         }
     }
 
+    //Funcio que rescriu el fitxer amb tots els proveidors del programa
     public void actualizaStock(List<Provider> providers) {
         Gson gson = new Gson();
         File file = new File(path);
@@ -64,6 +66,7 @@ public class ProviderJsonDao implements Cheek {
         }
     }
 
+    //Funcio que comprova si el fitxer existeix
     @Override
     public boolean cheekFile() {
         File file = new File(path);

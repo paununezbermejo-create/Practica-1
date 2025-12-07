@@ -16,6 +16,7 @@ public class ClientJsonDao implements Cheek {
 
     private final String path = "data/clients.json";
 
+    //Funcio que llegeix el fitxer i retorna els clients guardats
     public List<Client> readClientFile() {
         Gson gson = new Gson();
 
@@ -31,6 +32,7 @@ public class ClientJsonDao implements Cheek {
         }
     }
 
+    //Funcio que comprova si el fitxer existeix
     @Override
     public boolean cheekFile() {
         File file = new File(path);
@@ -45,6 +47,7 @@ public class ClientJsonDao implements Cheek {
         return false; // ya existía
     }
 
+    //Funcio que rescriu el fitxer amb tots els clients del programa
     public void actualizatClient(List<Client> clients) {
         Gson gson = new Gson();
         try (FileWriter fw = new FileWriter(path)) {

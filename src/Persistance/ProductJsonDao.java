@@ -14,6 +14,7 @@ import java.util.List;
 public class ProductJsonDao implements Cheek {
     private final String path = "data/products.json";
 
+    //Funcio que llegeix el fitxer i retorna els productes guardats
     public List<Product> readFile(){
         Gson gson = new Gson();
 
@@ -28,7 +29,7 @@ public class ProductJsonDao implements Cheek {
             return null;
         }
     }
-
+    //Funcio que comprova si el fitxer existeix
     @Override
     public boolean cheekFile() {
         File file = new File(path);

@@ -8,20 +8,24 @@ public class Client {
     private String full_name;
     private List<PhoneNumber> phone_numbers;
 
+    //Constructor del client
     public Client(int clientID, String name, List<PhoneNumber> phones) {
         this.client_id = clientID;
         this.full_name = name;
         this.phone_numbers = phones;
     }
 
+    //Funcio que retorna el id del client
     public int getClientID() {
         return this.client_id;
     }
 
+    //Funcio que retorna el nom del client
     public String getName() {
         return this.full_name;
     }
 
+    //Funcio que retorna els numeros del client
     public List<PhoneNumber> getPhones() {
         return this.phone_numbers;
     }

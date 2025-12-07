@@ -11,6 +11,7 @@ import java.util.List;
 public class SaleCsvDao implements Cheek {
     private final String path = "data/sales.csv";
 
+    //Funcio que llegeix el fitxer i retorna les ventes guardades
     public List<Sale> readSaleFile()  {
         List<String> lines = null;
         try {
@@ -33,6 +34,7 @@ public class SaleCsvDao implements Cheek {
         }
     }
 
+    //Funcio que rescriu el fitxer amb totes les ventes del programa
     public void addSale(Sale sale) {
         try (FileWriter fw = new FileWriter(path, true)) { // true = append
             String text = String.format("%d,%s,%f,%s",
@@ -46,7 +48,8 @@ public class SaleCsvDao implements Cheek {
             throw new RuntimeException(e);
         }
     }
-    
+
+    //Funcio que comprova si el fitxer existeix
     @Override
     public boolean cheekFile() {
         File file = new File(path);

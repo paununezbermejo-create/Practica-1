@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUIManager {
+    //Diferents missatges que es mostraran dins el programa
     private final String SHUTTING_DOWN_MESSAGE = "Shutting Down...";
     private final String menu1Message =
             "\t\t1) Login\n" +
@@ -40,9 +41,11 @@ public class ConsoleUIManager {
     private final String NO_PRODUCTS_IN_CART_MESSAGE = "There are no products in the shopping cart.\n";
     private final String NO_PURCHASED_MADE_MESSAGE = "No purchasses made.\n";
 
+    //Variables scanner i error
     private final Scanner input = new Scanner(System.in);
     private Error error;
 
+    //Procediment que es mostra al iniciar el programa
     public void showPresentationMessage (){
         System.out.println(
                 " _   _           _        _____             ____            _           _   \n" +
@@ -57,17 +60,21 @@ public class ConsoleUIManager {
         );
     }
 
+    //Procediment que mostra el missatge de comprovacio de fitxers
     public void showValidFiles () {
         System.out.println("Files Ok.");
         System.out.println(statingMessage);
     }
 
+    //Procediment que mostra el missatge de fi del programa
     public void showShuttingDown () {
         System.out.println(SHUTTING_DOWN_MESSAGE);
     }
 
+    //Funcio que mostra el menu de inici de sesio del programa
     public MenuOption1 getMenu1 (){
         switch (statingMessage){}
+        //Bucle fins que l'usuari esculli una opcio correcta
         do {
             System.out.print(menu1Message);
             System.out.print(enterOption);
@@ -85,6 +92,7 @@ public class ConsoleUIManager {
         } while(true);
     }
 
+    //Funcio que retorna un id demanat al usuari
     public int recuestIdLogin (){
         System.out.print(enterLoginId);
         try {
@@ -96,28 +104,34 @@ public class ConsoleUIManager {
         }
     }
 
+    //Funcio que mostra el missatge de benvinguda al usuari
     public void showWelcomeMessage (String name){
         System.out.print(welcomeMessage + name + "!\n\n");
     }
 
+    //Funcio que mostra error si el id no existeix
     public void showErrorIDNotFound(){
         System.out.print(ERROR_MESSAGE_FILE_PROVIDER);
     }
 
+    //Procediment que demana un nom
     public String recuetSignInName (){
         String trash = input.nextLine();
         System.out.print(enterName);
         return input.nextLine();
     }
 
+    //Procediment que demana un numero
     public int recuestNumPhones (){
         System.out.print(ENTER_NUM_PHONES);
         return Integer.parseInt(input.nextLine());
     }
 
+    //Procediment que demana un conjunt de numeros
     public PhoneNumber recuestPhoneNumber (){
         System.out.print(enterPhoneNumber);
         boolean valid = false;
+        //Bucle fins que l'usuari introdueix un numero valid
         while(!valid){
             String phoneNumber = input.nextLine();
             String[] s = phoneNumber.split(" ");
@@ -137,6 +151,7 @@ public class ConsoleUIManager {
         return null;
     }
 
+    //Funcio que mostra el menu d'opcions d'usuari
     public MenuOption2 getMenu2 (){
         do {
             System.out.print(menu2Message);
@@ -157,6 +172,7 @@ public class ConsoleUIManager {
         }while(true);
     }
 
+    //Procediment que mostra per pantalla el client escollit
     public void showClientProfile (Client client, List<Sale> sales, List <Product> products) {
         System.out.print("\n\n--| User Profile |--\n\n");
         System.out.println("Client ID: " +client.getClientID());
@@ -168,16 +184,19 @@ public class ConsoleUIManager {
         System.out.print("\nShopping history:\n");
     }
 
+    //Funcio que retorna el id del producte
     public String recuestProductKeyWord (){
         String trash = input.nextLine();
         System.out.print(recuestKeyword);
         return input.nextLine();
     }
 
+    //Procediment que mostra tots els productes escollits
     public void showListProducts (List<Product> products){
 
         int i = 1;
         System.out.print("\n");
+        //Bucle que acaba al mostrar tots els productes escollits
         for (Product product : products){
             System.out.print("\t"+i+") " +product.getProductID() + " - " + product.getProductName() + "\n");
             i++;
@@ -185,6 +204,7 @@ public class ConsoleUIManager {
         System.out.print("\n\t0) Back\n\n");
     }
 
+    //Procediment que mostra la informacio d'un producte
     public void showProductInfo (Product product){
         System.out.println("Product ID: " + product.getProductID() + ",");
         System.out.println("Name: " + product.getProductName() + ",");
@@ -193,6 +213,7 @@ public class ConsoleUIManager {
         System.out.println("Providers:\n");
     }
 
+    //Procediment que mostra la informacio dels proveidors d'un producte
     public void showProductInfoByProviders (List<Provider> provider, Product product){
         int i = 1;
         for (Provider p : provider){
@@ -209,15 +230,17 @@ public class ConsoleUIManager {
         System.out.print("\t0) Back\n\n");
     }
 
+    //Funcio que demana a l'usuari una opcio a escollir
     public int recuestOption (){
         System.out.print(enterOption);
         return input.nextInt();
     }
 
-
+    //Procediment que mostra tots els proveidors guardats dins el programa
     public void showListProviders (List<Provider> providers){
         int i = 1;
         System.out.print("\n");
+        //Bucle que acaba al mostrar tots els proveidors
         for (Provider provider : providers){
             System.out.print("\t"+i+") " + provider.getCompanyName() + "\n");
             i++;
@@ -226,6 +249,7 @@ public class ConsoleUIManager {
         System.out.print("\t0) Back\n\n");
     }
 
+    //Procediment que mostra tota la informacio d'un proveidor
     public void showProviderInfo(Provider provider){
         System.out.println("\nName: " + provider.getCompanyName() + ",");
         System.out.println("CIF: " + provider.getCif() + ",");
@@ -234,10 +258,13 @@ public class ConsoleUIManager {
         System.out.println("Contact email: " + provider.getEmail() + ",");
     }
 
+    //Procediment que mostra tos els productes d'un proveider
     public void showListlProductsProvider (List<ProductProvider> productsP, List<Product> products){
         int x = 1;
         System.out.println("Provider products:\n");
+        //Bucle que acaba al mostrar tots els productes del proveidor
         for (int i = 0; i < productsP.size(); i++){
+            //Bucle que acaba al mostrar tots els productes del proveidor
             for(int j = 0; j < products.size(); j++){
                 if (products.get(j).getProductID().equals(products.get(i).getProductID()) && productsP.get(i).checkStock()){
                     System.out.print("\t"+x+") "
@@ -255,12 +282,16 @@ public class ConsoleUIManager {
         System.out.print("\t0) Back\n\n");
     }
 
+    //Procediment que mostra tots els objectes dintre els carrets
     public void showCart (List<Cart> carts, List<Product> products, List<Provider> providers) {
         double total = 0;
         if (!carts.isEmpty()){
+            //Bucle que acaba al mostrar tots els carrets
             for (Cart cart : carts){
+                //Bucle que acaba al mostrar tots els productes dins els carrets
                 for (Product product : products){
                     if (cart.getProductId().equals(product.getProductID())){
+                        //Bucle que acaba al mostrar tots els proveidors dels productes dins els carrets
                         for (Provider provider : providers){
                             if (cart.getProviderId() == provider.getProviderId()){
                                 System.out.print("\t + "+product.getProductID()+" - "+product.getProductName()+ " \t\t(" + provider.getCompanyName()+ ")\t\t\t" + cart.getPrice() + "€\n");
@@ -276,6 +307,7 @@ public class ConsoleUIManager {
         }
     }
 
+    //Funcio que retorna l'opcio de l'usuari de crear un carret
     public boolean recuetComfirmationShoppinCart (){
         String trash = input.nextLine();
         System.out.print(enterComfirmationShoppinCart);
@@ -286,6 +318,7 @@ public class ConsoleUIManager {
         }
     }
 
+    //Funcio que retorna l'opcio de l'usuari de comprar un carret
     public boolean recuetComfirmationPurchase (){
         String trash = input.nextLine();
         System.out.print(enterComfirmationPurchase);
@@ -296,11 +329,14 @@ public class ConsoleUIManager {
         }
     }
 
+    //Procediment que mostra el historial de ventes
     public void showHistorial(List<Sale> sales, List<Product> products){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy – HH:mm");
 
         if (!sales.isEmpty()){
+            //Bucle que acaba al mostrar totes les ventes
             for (Sale sale : sales){
+                //Bucle que acaba al mostrar tots els productes dins les ventes
                 for (Product product : products){
                     if (sale.getProductId().equals(product.getProductID())){
                         Date date = new Date(sale.getPurchaseDate() * 1000L);;
@@ -319,22 +355,23 @@ public class ConsoleUIManager {
         }
     }
 
+    //Procediment que mostra per pantalla un missatge de confirmacio
     public void showProductAddedMessage (){
         System.out.println(producAddedMessage);
     }
-
+    //Procediment que mostra per pantalla un missatge de confirmacio
     public void showPurchaseMadeMessage (){
         System.out.println(purchaseMadeMessage);
     }
-
+    //Procediment que mostra per pantalla un missatge de confirmacio
     public void showExitMessage (){
         System.out.println(exitMessage);
     }
-
+    //Procediment que mostra per pantalla un missatge de error
     public void showErrorMessageFileProduct (){
         System.out.println(ERROR_MESSAGE_FILE_PRODUCT);
     }
-
+    //Procediment que mostra per pantalla un missatge de error
     public void showErrorMessageFileProvider (){
         System.out.println(ERROR_MESSAGE_FILE_PROVIDER);
     }
