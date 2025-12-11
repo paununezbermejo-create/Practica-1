@@ -44,14 +44,14 @@ public class Controller {
                         //Cas on el usuari fa login
                         id = loginUser();
                         ui.showWelcomeMessage(cm.getNameById(id));
-                        startMenu2(id);
+                        startMenuUser(id);
                         break;
 
                     case Sign_up:
                         //Cas on el usuari fa signup
                         id = signUpUser();
                         ui.showWelcomeMessage(cm.getNameById(id));
-                        startMenu2(id);
+                        startMenuUser(id);
                         break;
 
                     case Exit:
@@ -105,7 +105,7 @@ public class Controller {
     }
 
     //Procediment que s'inicialitza un cop s'ha iniciat sesio o s'ha registrat l'usuari
-    private void startMenu2(int id) {
+    private void startMenuUser(int id) {
 
         boolean active_2 = true;
         int op, op_2;

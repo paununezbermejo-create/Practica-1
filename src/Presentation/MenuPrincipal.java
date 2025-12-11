@@ -1,6 +1,6 @@
 package Presentation;
 
-public enum MenuOption1 {
+public enum MenuPrincipal {
     Login,
     Sign_up,
     Exit

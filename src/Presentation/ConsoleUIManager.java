@@ -2,7 +2,6 @@ package Presentation;
 
 import Business.Entities.*;
 
-import java.awt.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -11,20 +10,20 @@ import java.util.Scanner;
 public class ConsoleUIManager {
     //Diferents missatges que es mostraran dins el programa
     private final String SHUTTING_DOWN_MESSAGE = "Shutting Down...";
-    private final String menu1Message =
+    private final String MENU_PRINCIPAL_OPTIONS =
             "\t\t1) Login\n" +
             "\t\t2) Sign up\n\n" +
             "\t\t0) Exit \n\n";
-    private final String menu2Message =
+    private final String MENU_USER_OPTIONS =
             "\t\t1) User profile \n" +
             "\t\t2) Find products by name \n" +
             "\t\t3) Find products by provider \n" +
             "\t\t4) Shopping cart \n\n" +
             "\t\t0) Logout\n\n";
-    private final String welcomeMessage = "\nWelcome ";
-    private final String statingMessage = "Starting program...\n";
-    private final String enterOption = "Choose an option: ";
-    private final String enterLoginId = "Client ID: ";
+    private final String WELCOME_MESSAGE = "\nWelcome ";
+    private final String STARTING_MESSAGE = "Starting program...\n";
+    private final String ENTER_OPTION_MESSAGE = "Choose an option: ";
+    private final String ENTER_LOGIN_ID = "Client ID: ";
     private final String enterName = "Full Name: ";
     private final String ENTER_NUM_PHONES = "How many phone number do you have ? ";
     private final String enterPhoneNumber = "Enter Phone Number: ";
@@ -72,7 +71,7 @@ public class ConsoleUIManager {
     }
 
     //Funcio que mostra el menu de inici de sesio del programa
-    public MenuOption1 getMenu1 (){
+    public MenuPrincipal getMenu1 (){
         switch (statingMessage){}
         //Bucle fins que l'usuari esculli una opcio correcta
         do {
@@ -81,9 +80,9 @@ public class ConsoleUIManager {
             try {
                 int option = input.nextInt();
                 switch (option) {
-                    case 0: return MenuOption1.Exit;
-                    case 1: return MenuOption1.Login;
-                    case 2: return MenuOption1.Sign_up;
+                    case 0: return MenuPrincipal.Exit;
+                    case 1: return MenuPrincipal.Login;
+                    case 2: return MenuPrincipal.Sign_up;
                     default: System.out.print(error.ERROR_WRONG_OPTION.getMessage());
                 }
             } catch (NumberFormatException e) {
@@ -152,18 +151,18 @@ public class ConsoleUIManager {
     }
 
     //Funcio que mostra el menu d'opcions d'usuari
-    public MenuOption2 getMenu2 (){
+    public MenuUser getMenu2 (){
         do {
             System.out.print(menu2Message);
             System.out.print(enterOption);
             try {
                 int option = input.nextInt();
                 switch (option) {
-                    case 0: return MenuOption2.Exit;
-                    case 1: return MenuOption2.User_Profile;
-                    case 2: return MenuOption2.Find_Products_By_Name;
-                    case 3: return MenuOption2.Find_Products_By_Provider;
-                    case 4: return MenuOption2.Shopping_Cart;
+                    case 0: return MenuUser.Exit;
+                    case 1: return MenuUser.User_Profile;
+                    case 2: return MenuUser.Find_Products_By_Name;
+                    case 3: return MenuUser.Find_Products_By_Provider;
+                    case 4: return MenuUser.Shopping_Cart;
                     default: System.out.print(error.ERROR_WRONG_OPTION.getMessage());
                 }
             }catch (NumberFormatException e) {

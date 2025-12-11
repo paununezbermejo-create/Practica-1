@@ -1,6 +1,6 @@
 package Presentation;
 
-public enum MenuOption2 {
+public enum MenuUser {
     User_Profile,
     Find_Products_By_Name,
     Find_Products_By_Provider,
